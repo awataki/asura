@@ -26,8 +26,9 @@
             v-for="i in urls"
             :key="i"
             ref="videos"
-            :cols="Math.round(12 / Math.ceil(Math.sqrt(urls.length)))"
-            :style="'height:' + 100 / Math.round(Math.sqrt(urls.length)) + '%;'"
+            :cols="
+              isMobile ? 12 : Math.round(12 / Math.ceil(Math.sqrt(urls.length)))
+            "
           />
         </v-row>
       </v-container>
@@ -45,6 +46,20 @@ export default Vue.extend({
       urls: [],
       snackbar: false
     };
+  },
+  computed: {
+    isMobile() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return true;
+        case 'sm':
+          return true;
+        case 'md':
+          return true;
+        default:
+          return false;
+      }
+    }
   },
   methods: {
     async addURL() {
